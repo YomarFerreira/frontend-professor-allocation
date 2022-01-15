@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+#myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    max-width: 100%;
+}
+
+.content_video {
+    position: fixed;
+    bottom: 0;
+    /*    background: rgba(255, 255, 255, 0.5); */
+    background: linear-gradient(to left, transparent 5%, white 100%);
+    color: #f1f1f1;
+    width: 100%;
+}
