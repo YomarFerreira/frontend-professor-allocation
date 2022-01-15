@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/bootstrap.min.Bootswatch.flatly.css" />
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <link rel="shortcut icon" href="../img/favicon.png" />
+    <title>Professor Allocation</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand opacity-50">Professor Allocation</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerMenu" aria-controls="navbarTogglerMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerMenu">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../allocation/">Allocation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../professor/">Professor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="../course/">Course</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../department/">Department</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <main class="container mt-4">
+
+        <div class="table-responsive card border-secondary mb-3">
+            <div class="card-header">Course</div>
+            <div class="card-body navbar" style="height:460px !important;">
+
+                <ul class="navbar-nav me-auto">
+                    <!-- Button trigger modal // create course -->
+                    <button type="button" class="btn btn-success " onclick="openModalCourse('Create Course', 'Save')">Create Course</button>
+                </ul>
+                <form class="d-flex" onsubmit="event.preventDefault()">
+                    <input class="form-control me-sm-2" type="text" id="searchItem" placeholder="Search">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit" type="submit" onclick="getCourses(searchItem.value)">Search</button>
+                </form>
+
+                <table class="table table-striped table-hover mb-0" style="position:relative; width:100%; height:90%; overflow:hidden;">
+                    <thead>
+                        <tr>
+                            <th style="width:7%;">ID</th>
+                            <th style="width:84%;">Name</th>
+                            <th style="width:9%;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body-course" style="position:absolute; width:100%; height:90%; overflow:auto;"></tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <!-- Modal Create/Edit-->
+        <div class="modal fade" id="modalCourse" tabindex="-1" aria-labelledby="modalCourseLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCourseLabel">Create Course</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <span aria-hidden="true"></span>
+                    </div>
+                    <div id="modal-alert" class="d-none alert alert-warning mx-3 mt-3"></div>
+                    <form action="">
+
+                        <input id="hiddenPk" type="hidden" value="" />
+
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input required type="text" class="form-control" id="name" placeholder="Enter the name">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="buttonSave" onclick="saveCourse(event)">Save</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Delete-->
+        <div class="modal fade" id="modalDeleteCourse" tabindex="-1" aria-labelledby="modalDeleteCourseLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalDeleteCourseLabel">Delete Course</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <span aria-hidden="true"></span>
+                    </div>
+                    <form action="">
+
+                        <input id="hiddenPkDelete" type="hidden" value="" />
+
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="namecourse" id="NameCourseLabel" class="form-label"></label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="buttonDelete" onclick="removeCourse(hiddenPkDelete.value)">Yes</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+    </main>
+    <script src="../js/index.js"></script>
+    <script src="../js/course.js"></script>
+
+</body>
+
+</html>

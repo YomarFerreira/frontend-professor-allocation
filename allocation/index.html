@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/bootstrap.min.Bootswatch.flatly.css" />
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <link rel="shortcut icon" href="../img/favicon.png" />
+    <title>Professor Allocation</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand opacity-50">Professor Allocation</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerMenu" aria-controls="navbarTogglerMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerMenu">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="../allocation/index.html">Allocation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../professor/index.html">Professor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../course/index.html">Course</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../department/index.html">Department</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <main class="container mt-4">
+
+        <div class="table-responsive card border-secondary mb-3">
+            <div class="card-header">Allocation</div>
+            <div class="card-body navbar" style="height:460px !important;">
+
+                <ul class="navbar-nav me-auto">
+                    <!-- Button trigger modal // create allocation -->
+                    <button type="button" class="btn btn-success " onclick="openModalAllocation('Create Allocation', 'Save')">Create Allocation</button>
+                </ul>
+
+
+                <table class="table table-striped table-hover mb-0" style="position:relative; width:100%; height:90%; overflow:hidden;">
+                    <thead>
+                        <tr>
+                            <th style="width:7%;">ID</th>
+                            <th style="width:10%;">Day of Week</th>
+                            <th style="width:9%;">Start Hour</th>
+                            <th style="width:8%;">End Hour</th>
+                            <th style="width:13%;">Professor</th>
+                            <th style="width:19%;">Department</th>
+                            <th style="width:24%;">Course</th>
+                            <th style="width:9%;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body-allocation" style="position:absolute; width:100%; height:90%; overflow:auto;"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal Create/Edit-->
+        <div class="modal fade" id="modalAllocation" tabindex="-1" aria-labelledby="modalAllocationLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalAllocationLabel">Create Allocation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <span aria-hidden="true"></span>
+                    </div>
+                    <div id="modal-alert" class="d-none alert alert-warning mx-3 mt-3"></div>
+                    <form action="">
+
+                        <input id="hiddenPk" type="hidden" value="" />
+
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="dayOfWeek" class="form-label">Day of Week</label>
+                                <select type="text" class="form-control form-control-sm" id="dayOfWeek" placeholder="Enter the day of the week of the allocation">
+                                    <option value="MONDAY">Monday</option>
+                                    <option value="TUESDAY">Tuesday</option>
+                                    <option value="WEDNESDAY">Wednesday</option>
+                                    <option value="THURSDAY">Thursday</option>
+                                    <option value="FRIDAY">Friday</option>
+                                    <option value="SATURDAY">Saturday</option>
+                                    <option value="SUNDAY">Sunday</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="startHour" class="form-label">Start Hour</label>
+                                <input type="time" class="form-control" id="startHour" placeholder="Enter the start time of the allocation">
+                            </div>
+                            <div class="mb-3">
+                                <label for="endHour" class="form-label">End Hour</label>
+                                <input type="time" class="form-control" id="endHour" placeholder="Enter the end time of the allocation">
+                            </div>
+                            <div class="mb-3">
+                                <label for="professor" class="form-label">Professor</label>
+                                <select type="text" class="form-control form-control-sm" id="professor" placeholder="Choose the professor's name"></select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="course" class="form-label">Course</label>
+                                <select type="text" class="form-control form-control-sm" id="course" placeholder="Choose the course's name"></select>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="buttonSave" onclick="saveAllocation(event)">Save</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Delete-->
+        <div class="modal fade" id="modalDeleteAllocation" tabindex="-1" aria-labelledby="modalDeleteAllocationLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalDeleteAllocationLabel">Delete Allocation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <span aria-hidden="true"></span>
+                    </div>
+                    <form action="">
+
+                        <input id="hiddenPkDelete" type="hidden" value="" />
+
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="nameallocation" id="NameAllocationLabel" class="form-label"></label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="buttonDelete" onclick="removeAllocation(hiddenPkDelete.value)">Yes</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+    </main>
+    <script src="../js/index.js"></script>
+    <script src="../js/allocation.js"></script>
+
+</body>
+
+</html>
